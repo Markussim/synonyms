@@ -7,7 +7,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => res.sendFile(__dirname + "/index.html"));
 
-app.post("/synonyms", (req, res) => {
+app.post("/synonyms", async (req, res) => {
   //console.log(req.body.text);
 
   let wordsArray = req.body.text.split(" ");
