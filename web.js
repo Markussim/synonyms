@@ -40,7 +40,8 @@ async function createSynList(words, res) {
       if (timeOut) wordsProsessed += "\n(Timeout, please try again)";
       if (i < words.length && !timeOut) {
         console.log(i);
-        let syn = words[i].length > 1 ? findSynonym(words[i].toLowerCase()) : words[i];
+        let syn =
+          words[i].length > 1 ? findSynonym(words[i].toLowerCase()) : words[i];
 
         if (syn) {
           wordsProsessed += syn + " ";
