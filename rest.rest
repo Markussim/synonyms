@@ -3,6 +3,6 @@ POST http://localhost:3000/synonyms
 Content-Type: application/json
 
 {
-    "text": "hello there"
+    "text": "An internet satellite constellation is a large number of satellites orbiting the earth, communicating with devices or base stations on the ground, to provide internet connectivity to said devices. There are currently several companies planning on launching internet satellite constellations."
 
 }

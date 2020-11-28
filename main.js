@@ -10,20 +10,11 @@ const fs = require("fs");
   }
   let wordsArray = data.split(" ");
 
-  for (let i = 0; i < wordsArray.length; i++) {
-    if (this.findSynonym(wordsArray[i].toLowerCase())) {
-      process.stdout.write(
-        this.findSynonym(wordsArray[i].toLowerCase())[0] + " "
-      );
-    } else {
-      process.stdout.write(wordsArray[i] + " ");
-    }
-  }
+  console.log(this.createSynList(wordsArray));
 });*/
 
-this.createSynList(["hello", "there"]);
-
 exports.createSynList = (words) => {
+  console.log(words)
   let wordsProsessed = "";
   for (let i = 0; i < words.length; i++) {
     if (this.findSynonym(words[i].toLowerCase())) {
@@ -35,8 +26,6 @@ exports.createSynList = (words) => {
 
   return wordsProsessed;
 };
-
-//console.log(findSynonym("hello")[0])
 
 exports.findSynonym = (word) => {
   var index = synonyms.findIndex(function (item, i) {

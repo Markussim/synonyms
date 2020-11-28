@@ -1,5 +1,4 @@
 const express = require("express");
-const syn = require("./main.js");
 const synonyms = require("./synonyms.json");
 const app = express();
 const port = 3000;
@@ -13,23 +12,33 @@ app.post("/synonyms", (req, res) => {
 
   let wordsArray = req.body.text.split(" ");
 
-  console.log(wordsArray);
-
-  for (let i = 0; i < wordsArray.length; i++) {
-    console.log(this.findSynonym(wordsArray[i].toLowerCase()));
-    if (this.findSynonym(wordsArray[i].toLowerCase())) {
-      res.write(this.findSynonym(wordsArray[i].toLowerCase())[0] + " ");
-    } else {
-      res.write(wordsArray[i] + " ");
-    }
-  }
-  res.end();
+  res.send(createSynList(wordsArray));
 });
 
 app.listen(port, () => console.log(`Example app listening on port port!`));
 
-exports.findSynonym = (word) => {
+function createSynList(words) {
+  let wordsProsessed = "";
+  for (let i = 0; i < words.length; i++) {
+    let syn = findSynonym(words[i].toLowerCase());
+    if (syn) {
+      wordsProsessed += syn + " ";
+    } else {
+      wordsProsessed += words[i] + " ";
+    }
+  }
+
+  return wordsProsessed;
+}
+
+function findSynonym(word) {
   var index = synonyms.findIndex(function (item, i) {
     return item.word == word;
   });
-};
+
+  if (synonyms[index]) {
+    return synonyms[index].synonyms[0];
+  } else {
+    return false;
+  }
+}

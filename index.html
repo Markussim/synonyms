@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    
-</body>
+    <script>
+      function sendRequest() {
+        let request = new XMLHttpRequest();
+        let text = document.getElementById("text").value;
+        request.open("POST", "/synonyms", true);
+        request.setRequestHeader("Content-type", "application/json");
+        request.send(`{"text": "${escape(text)}"}`);
+        request.onreadystatechange = function () {
+          if (request.status == 200) {
+            document.getElementById("textBox").innerText = request.responseText;
+          }
+          if (request.status == 401) {
+            alert("Wrong Username or Password!");
+          }
+        };
+      }
+
+      escape = function (str) {
+        return str
+          .replace(/[\\]/g, "\\\\")
+          .replace(/[\"]/g, '\\"')
+          .replace(/[\/]/g, "\\/")
+          .replace(/[\b]/g, "\\b")
+          .replace(/[\f]/g, "\\f")
+          .replace(/[\n]/g, "\\n")
+          .replace(/[\r]/g, "\\r")
+          .replace(/[\t]/g, "\\t");
+      };
+    </script>
+  </head>
+  <body>
+    <form
+      onsubmit="sendRequest(); return false"
+      action="/synonyms"
+      method="post"
+      enctype="application/json"
+    >
+      <textarea id="text" type="text" name="text"></textarea>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="textBox"></p>
+  </body>
 </html>
