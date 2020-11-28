@@ -28,14 +28,17 @@ async function createSynList(words, res) {
     }
   }*/
 
-  
+  let startDateInt = new Date().getTime();
+
   let i = 0;
   asyncLoop(res, wordsProsessed);
-  
 
   function asyncLoop(res, wordsProsessed) {
     setTimeout(() => {
-      if (i < words.length) {
+      let timeOut = new Date().getTime() - startDateInt > 10000;
+      console.log(!timeOut)
+      if (timeOut) wordsProsessed += "\n(Timeout, please try again)"
+      if (i < words.length && !timeOut) {
         console.log(i);
         let syn = findSynonym(words[i].toLowerCase());
         if (syn) {
@@ -44,12 +47,12 @@ async function createSynList(words, res) {
           wordsProsessed += words[i] + " ";
         }
         i++;
-        setTimeout(function(){
-            asyncLoop(res, wordsProsessed);
+        setTimeout(function () {
+          asyncLoop(res, wordsProsessed);
         }, 0);
       } else {
         console.log(i);
-        res.send(wordsProsessed) ;
+        res.send(wordsProsessed);
       }
     }, 0);
   }
