@@ -12,23 +12,47 @@ app.post("/synonyms", async (req, res) => {
 
   let wordsArray = req.body.text.split(" ");
 
-  res.send(createSynList(wordsArray));
+  createSynList(wordsArray, res);
 });
 
 app.listen(port, () => console.log(`Example app listening on port port!`));
 
-function createSynList(words) {
+async function createSynList(words, res) {
   let wordsProsessed = "";
-  for (let i = 0; i < words.length; i++) {
+  /*for (let i = 0; i < words.length; i++) {
     let syn = findSynonym(words[i].toLowerCase());
     if (syn) {
       wordsProsessed += syn + " ";
     } else {
       wordsProsessed += words[i] + " ";
     }
-  }
+  }*/
 
-  return wordsProsessed;
+  
+  let i = 0;
+  asyncLoop(res, wordsProsessed);
+  
+
+  function asyncLoop(res, wordsProsessed) {
+    setTimeout(() => {
+      if (i < words.length) {
+        console.log(i);
+        let syn = findSynonym(words[i].toLowerCase());
+        if (syn) {
+          wordsProsessed += syn + " ";
+        } else {
+          wordsProsessed += words[i] + " ";
+        }
+        i++;
+        setTimeout(function(){
+            asyncLoop(res, wordsProsessed);
+        }, 0);
+      } else {
+        console.log(i);
+        res.send(wordsProsessed) ;
+      }
+    }, 0);
+  }
 }
 
 function findSynonym(word) {

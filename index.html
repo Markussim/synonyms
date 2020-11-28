@@ -6,6 +6,7 @@
     <title>Document</title>
     <script>
       function sendRequest() {
+        document.getElementById("textBox").innerText = "Loading";
         let request = new XMLHttpRequest();
         let text = document.getElementById("text").value;
         request.open("POST", "/synonyms", true);
