@@ -15,11 +15,20 @@
         request.onreadystatechange = function () {
           if (request.status == 200) {
             document.getElementById("textBox").innerText = request.responseText;
+            document.getElementById("Again").style.display = "block";
           }
           if (request.status == 401) {
             alert("Wrong Username or Password!");
           }
         };
+      }
+
+      function sendAgain() {
+        document.getElementById("Again").style.display = "none";
+        document.getElementById("text").value = document.getElementById(
+          "textBox"
+        ).innerText;
+        sendRequest();
       }
 
       escape = function (str) {
@@ -47,5 +56,6 @@
       <button type="submit">Submit</button>
     </form>
     <p id="textBox"></p>
+    <button onclick="sendAgain()" id="Again" style="display: none">Submit again</button>
   </body>
 </html>

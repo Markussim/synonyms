@@ -36,8 +36,8 @@ async function createSynList(words, res) {
   function asyncLoop(res, wordsProsessed) {
     setTimeout(() => {
       let timeOut = new Date().getTime() - startDateInt > 10000;
-      console.log(!timeOut)
-      if (timeOut) wordsProsessed += "\n(Timeout, please try again)"
+      console.log(!timeOut);
+      if (timeOut) wordsProsessed += "\n(Timeout, please try again)";
       if (i < words.length && !timeOut) {
         console.log(i);
         let syn = findSynonym(words[i].toLowerCase());
@@ -64,8 +64,16 @@ function findSynonym(word) {
   });
 
   if (synonyms[index]) {
-    return synonyms[index].synonyms[0];
+    return synonyms[index].synonyms[
+      getRandomInt(0, synonyms[index].synonyms.length - 1)
+    ];
   } else {
     return false;
   }
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
